@@ -518,13 +518,13 @@ async function genMeal(){
 {"days":[{"day":"월","soup":"국이름","sides":["반찬1","반찬2","반찬3"],"nutrition":["단백질","채소풍부"],"seasonal":"제철재료명"}],"shopping":{"채소류":[{"name":"재료","qty":"양"}],"육류·해산물":[{"name":"재료","qty":"양"}],"두부·달걀":[{"name":"재료","qty":"양"}],"양념·기타":[{"name":"재료","qty":"양"}]}}`;
   try{
     const res=await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${apiKey}`,
       {
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
           contents:[{parts:[{text:prompt}]}],
-          generationConfig:{temperature:0.7,maxOutputTokens:1500}
+          generationConfig:{temperature:0.7,maxOutputTokens:2000}
         })
       }
     );

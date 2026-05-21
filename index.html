@@ -514,8 +514,8 @@ async function genMeal(){
   const btn=document.getElementById('gbtn'),sp=document.getElementById('spin'),bt=document.getElementById('gbtn-txt'),err=document.getElementById('merr');
   btn.disabled=true; sp.style.display='block'; bt.textContent='생성 중...'; err.innerHTML='';
   const s=getSeason();
-  const prompt=`당신은 한식 영양사입니다. 지금은 ${s.name}철입니다. 1인 가구를 위한 7일치(월~일) 저녁 식단을 JSON으로 만들어주세요. 각 날마다 국 1가지, 반찬 3가지. ${s.name} 제철 식재료를 적극 활용하고, 7일간 단백질·채소·탄수화물 영양 균형을 맞춰주세요. 같은 재료가 연속 반복되지 않게 해주세요. 응답은 반드시 아래 JSON만, 마크다운 없이 순수 JSON 텍스트만 출력하세요:
-{"days":[{"day":"월","soup":"국이름","sides":["반찬1","반찬2","반찬3"],"nutrition":["단백질","채소풍부"],"seasonal":"제철재료명"}],"shopping":{"채소류":[{"name":"재료","qty":"양"}],"육류·해산물":[{"name":"재료","qty":"양"}],"두부·달걀":[{"name":"재료","qty":"양"}],"양념·기타":[{"name":"재료","qty":"양"}]}}`;
+  const prompt=`한식 영양사로서 ${s.name}철 1인 가구 7일치(월~일) 저녁 식단을 JSON으로 출력하세요. 국1개, 반찬3개. 제철재료 활용, 영양균형, 재료 연속반복 금지. JSON만 출력, 다른 텍스트 없이:
+{"days":[{"day":"월","soup":"국","sides":["반찬1","반찬2","반찬3"],"nutrition":["단백질"],"seasonal":"재료"}],"shopping":{"채소류":[{"name":"재료","qty":"양"}],"육류·해산물":[{"name":"재료","qty":"양"}],"두부·달걀":[{"name":"재료","qty":"양"}],"양념·기타":[{"name":"재료","qty":"양"}]}}`;
   try{
     const res=await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${apiKey}`,
@@ -524,7 +524,7 @@ async function genMeal(){
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
           contents:[{parts:[{text:prompt}]}],
-          generationConfig:{temperature:0.7,maxOutputTokens:2000}
+          generationConfig:{temperature:0.7,maxOutputTokens:4000}
         })
       }
     );
